@@ -1,6 +1,6 @@
 # 🛡️ Aegis Defender Pro — Antivirus Architecture & System Internals
 
-A comprehensive technical deep-dive into **Aegis Defender Pro**, explaining both the user-space multi-layer detection architecture and how commercial antivirus products like **Norton 360**, **McAfee**, **CrowdStrike Falcon**, and **Microsoft Defender** operate at the operating system kernel level on **macOS** and **Windows**.
+A comprehensive technical deep-dive into **Aegis Defender Pro**, explaining both the user-space multi-layer detection architecture and how enterprise antivirus and EDR platforms operate at the operating system kernel level on **macOS** and **Windows**.
 
 ---
 
@@ -82,7 +82,7 @@ A comprehensive technical deep-dive into **Aegis Defender Pro**, explaining both
 
 ---
 
-## 3. How Commercial Antivirus Suites (Norton, McAfee, Defender) Work at the Kernel Level
+## 3. How Enterprise Antivirus & EDR Suites Work at the Kernel Level
 
 While user-space engines (like Aegis Defender Pro) provide rapid scanning and filesystem event monitoring, commercial enterprise suites utilize kernel-level extensions and OS security frameworks to intercept filesystem, process, and network I/O **before** disk writes or executions can complete.
 
@@ -153,7 +153,7 @@ Commercial Windows security suites operate through specialized Microsoft-approve
 
 ## 4. Feature Comparison Matrix
 
-| Capability | Aegis Defender Pro | Norton 360 | McAfee Total Protection | Windows Defender |
+| Capability | Aegis Defender Pro | Legacy AV Suites | Traditional Cloud AV | Windows Defender |
 | :--- | :---: | :---: | :---: | :---: |
 | **Cross-Platform (macOS + Windows)** | ✅ Yes | ✅ Separate builds | ✅ Separate builds | ⚠️ Win default, Mac via Intune |
 | **Zero External Dependencies** | ✅ Pure Python 3 | ❌ Heavy installer | ❌ Heavy installer | ❌ Built into Windows |

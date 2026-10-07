@@ -1,7 +1,7 @@
 """
 Aegis Defender Pro - AI / ML Threat Scoring Engine
 Performs deep static feature extraction, entropy mapping, and heuristic classification.
-Exceeds legacy Norton/McAfee signature lookup by identifying zero-day threats via structural anomalies.
+Exceeds legacy signature lookup by identifying zero-day threats via structural anomalies.
 """
 
 import math

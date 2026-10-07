@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-purple.svg)](#)
 [![Architecture](https://img.shields.io/badge/Engine-Multi--Layer%20Heuristic%20%2B%20Entropy-cyan.svg)](#)
 
-**Aegis Defender Pro** is a high-performance, cross-platform antivirus engine and cybersecurity command center inspired by commercial suites like **Norton 360** and **McAfee**. It delivers real-time filesystem protection, multi-layer heuristic threat detection, Shannon entropy crypter analysis, zero-execute quarantine isolation, process behavioral auditing, and an interactive Cyber Command Dashboard.
+**Aegis Defender Pro** is a high-performance, cross-platform Next-Gen EDR and advanced cybersecurity platform. It delivers real-time filesystem protection, multi-layer heuristic threat detection, Shannon entropy crypter analysis, zero-execute quarantine isolation, process behavioral auditing, and an interactive Cyber Command Dashboard.
 
 ---
 
@@ -168,4 +168,4 @@ aegis-antivirus/
 ---
 
 ## 📖 Deep Architectural Comparison
-For a detailed guide on how commercial products like **Norton**, **McAfee**, and **Microsoft Defender** operate at the operating system kernel level (Apple **`EndpointSecurity.framework`** and Windows **Minifilter Drivers / AMSI**), please read [ARCHITECTURE.md](ARCHITECTURE.md).
+For a detailed guide on how enterprise endpoint security platforms operate at the operating system kernel level (Apple **`EndpointSecurity.framework`** and Windows **Minifilter Drivers / AMSI**), please read [ARCHITECTURE.md](ARCHITECTURE.md).
