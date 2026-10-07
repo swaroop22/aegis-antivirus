@@ -24,3 +24,7 @@ quarantine_vault/*.aegis_quarantined
 .aegis_honeypot*
 test_samples/*.com
 test_samples/*.sh
+
+# Compiled Distribution Installers (uploaded to GitHub Releases)
+dist/
+
