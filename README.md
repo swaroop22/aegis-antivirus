@@ -12,51 +12,28 @@
 
 ---
 
-## 🖥️ Standalone Desktop Applications
+## 🖥️ Standalone Desktop Applications & Installers
 
-### 🍏 macOS Native App ()
-A real native macOS  bundle with custom cybersecurity shield icon:
-1. Located at: 
-2. Direct shortcut also on your Desktop: 
-3. **Double-click to launch**: Starts the background engine daemon and opens the Cyber Command Center in dedicated, frameless standalone desktop app window!
+### 🍏 macOS Native App (.app & .dmg)
+1. **Direct Application**: `Aegis Defender Pro.app` (Native macOS App bundle with custom retina shield icon).
+2. **Desktop Shortcut**: `~/Desktop/Aegis Defender Pro.app` (Double-click to launch!).
+3. **Distribution DMG**: `dist/Aegis-Defender-Pro-macOS.dmg` (Drag-and-drop installer for macOS users).
 
-### 🪟 Windows Desktop App
-Three double-clickable options for Windows 10 / 11:
-1. **Silent Desktop App ()**: Double-click to run silently in the background with zero black terminal window, opening in Edge/Chrome standalone app mode.
-2. **Desktop Shortcut Creator ()**: Right-click -> *Run with PowerShell* to generate an  desktop shortcut with custom icon on your Windows desktop.
-3. **Standalone  Compiler ()**: Run Collecting pyinstaller
-  Downloading pyinstaller-5.13.2-py3-none-macosx_10_13_universal2.whl.metadata (8.3 kB)
-Requirement already satisfied: setuptools>=42.0.0 in /Users/krishnajyothiswarooppothamsetti/opt/anaconda3/lib/python3.7/site-packages (from pyinstaller) (65.5.0)
-Collecting altgraph (from pyinstaller)
-  Downloading altgraph-0.17.5-py2.py3-none-any.whl.metadata (7.5 kB)
-Collecting pyinstaller-hooks-contrib>=2021.4 (from pyinstaller)
-  Downloading pyinstaller_hooks_contrib-2024.7-py2.py3-none-any.whl.metadata (16 kB)
-Requirement already satisfied: importlib-metadata>=1.4 in /Users/krishnajyothiswarooppothamsetti/opt/anaconda3/lib/python3.7/site-packages (from pyinstaller) (4.11.3)
-Collecting macholib>=1.8 (from pyinstaller)
-  Downloading macholib-1.16.4-py2.py3-none-any.whl.metadata (12 kB)
-Requirement already satisfied: zipp>=0.5 in /Users/krishnajyothiswarooppothamsetti/opt/anaconda3/lib/python3.7/site-packages (from importlib-metadata>=1.4->pyinstaller) (3.8.0)
-Requirement already satisfied: typing-extensions>=3.6.4 in /Users/krishnajyothiswarooppothamsetti/opt/anaconda3/lib/python3.7/site-packages (from importlib-metadata>=1.4->pyinstaller) (4.7.1)
-Collecting packaging>=22.0 (from pyinstaller-hooks-contrib>=2021.4->pyinstaller)
-  Downloading packaging-24.0-py3-none-any.whl.metadata (3.2 kB)
-Downloading pyinstaller-5.13.2-py3-none-macosx_10_13_universal2.whl (935 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 935.0/935.0 kB 2.0 MB/s eta 0:00:00
-Downloading macholib-1.16.4-py2.py3-none-any.whl (38 kB)
-Downloading altgraph-0.17.5-py2.py3-none-any.whl (21 kB)
-Downloading pyinstaller_hooks_contrib-2024.7-py2.py3-none-any.whl (341 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 341.3/341.3 kB 2.9 MB/s eta 0:00:00
-Downloading packaging-24.0-py3-none-any.whl (53 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.5/53.5 kB 3.3 MB/s eta 0:00:00
-Installing collected packages: altgraph, packaging, macholib, pyinstaller-hooks-contrib, pyinstaller
-  Attempting uninstall: packaging
-    Found existing installation: packaging 21.3
-    Uninstalling packaging-21.3:
-      Successfully uninstalled packaging-21.3
-Successfully installed altgraph-0.17.5 macholib-1.16.4 packaging-24.0 pyinstaller-5.13.2 pyinstaller-hooks-contrib-2024.7
-===========================================================
-  BUILDING STANDALONE WINDOWS EXECUTABLE: Aegis Defender
-===========================================================
-[*] Installing PyInstaller compiler...
-[+] Running PyInstaller... to compile everything into a single standalone  executable!
+### 🪟 Windows Desktop App (.vbs, .bat & .exe)
+1. **Silent Launcher (`Aegis Defender Pro.vbs`)**: Double-click to run silently in the background with zero black terminal window, launching the Cyber Command Center in standalone native app window.
+2. **Desktop Shortcut (`Create_Windows_Shortcut.ps1`)**: Right-click -> *Run with PowerShell* to generate a desktop shortcut with the official Aegis icon on your Windows desktop.
+3. **Standalone Exe Compiler (`build_windows_exe.py`)**: PyInstaller compilation script to package the entire engine into a standalone single-file `AegisDefender.exe`.
+
+---
+
+## 🌐 Public Website & Direct Downloads
+
+The project includes a website in `docs/` ready for free global hosting:
+- **Live GitHub Pages URL**: `https://swaroop22.github.io/aegis-antivirus/`
+- **macOS Installer (.DMG)**: [Download for macOS](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-macOS.dmg)
+- **Windows Bundle (.ZIP)**: [Download for Windows](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-Windows.zip)
+
+---
 
 ## ⚡ Quick Start
 
