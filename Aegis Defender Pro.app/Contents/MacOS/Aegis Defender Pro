@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -e
+
+# Resolve project directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+cd "$PROJECT_DIR"
+
+PORT=8787
+
+# Start server if not running
+if ! curl -s "http://localhost:$PORT/api/status" >/dev/null 2>&1; then
+    if [ -f "/Users/krishnajyothiswarooppothamsetti/opt/anaconda3/bin/python3" ]; then
+        PYTHON_CMD="/Users/krishnajyothiswarooppothamsetti/opt/anaconda3/bin/python3"
+    elif command -v python3 &>/dev/null; then
+        PYTHON_CMD="python3"
+    else
+        PYTHON_CMD="/usr/bin/python3"
+    fi
+    nohup "$PYTHON_CMD" server.py $PORT >/dev/null 2>&1 &
+    sleep 1.2
+fi
+
+# Native notification
+osascript -e 'display notification "Real-time shield & AI engine active." with title "Aegis Defender Pro" subtitle "Protection Armed"' >/dev/null 2>&1 || true
+
+URL="http://localhost:$PORT"
+
+# Open in standalone app window
+if [ -d "/Applications/Google Chrome.app" ]; then
+    open -na "/Applications/Google Chrome.app" --args --app="$URL" --window-size=1280,840
+elif [ -d "/Applications/Microsoft Edge.app" ]; then
+    open -na "/Applications/Microsoft Edge.app" --args --app="$URL" --window-size=1280,840
+elif [ -d "/Applications/Brave Browser.app" ]; then
+    open -na "/Applications/Brave Browser.app" --args --app="$URL" --window-size=1280,840
+else
+    open "$URL"
+fi
