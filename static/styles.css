@@ -10,21 +10,21 @@
   --bg-surface-3: #1a253d;
   
   --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(0, 242, 254, 0.25);
-  --border-active: rgba(0, 242, 254, 0.6);
+  --border-glow: rgba(56, 189, 248, 0.18);
+  --border-active: rgba(56, 189, 248, 0.45);
 
-  --cyan-primary: #00f2fe;
-  --cyan-glow: rgba(0, 242, 254, 0.35);
+  --cyan-primary: #38bdf8;
+  --cyan-glow: rgba(56, 189, 248, 0.16);
   --blue-accent: #3b82f6;
   
   --emerald-safe: #10b981;
-  --emerald-glow: rgba(16, 185, 129, 0.35);
+  --emerald-glow: rgba(16, 185, 129, 0.16);
   
   --crimson-threat: #ef4444;
-  --crimson-glow: rgba(239, 68, 68, 0.4);
+  --crimson-glow: rgba(239, 68, 68, 0.2);
   
   --amber-warn: #f59e0b;
-  --amber-glow: rgba(245, 158, 11, 0.35);
+  --amber-glow: rgba(245, 158, 11, 0.2);
 
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
