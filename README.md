@@ -31,7 +31,8 @@
 The project includes a website in `docs/` ready for free global hosting:
 - **Live GitHub Pages URL**: `https://swaroop22.github.io/aegis-antivirus/`
 - **macOS Installer (.DMG)**: [Download for macOS](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-macOS.dmg)
-- **Windows Bundle (.ZIP)**: [Download for Windows](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-Windows.zip)
+- **Windows Installer (.EXE)**: [Download for Windows (.EXE)](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Setup.exe)
+- **Windows Portable (.ZIP)**: [Download Portable ZIP](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-Windows.zip)
 
 ---
 

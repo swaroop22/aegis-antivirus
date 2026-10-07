@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  build-and-release:
+  build-macos:
     runs-on: macos-latest
     steps:
       - name: Checkout Repository
@@ -21,30 +21,93 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Build Distribution Packages
+      - name: Build macOS Distribution Packages
         run: |
           mkdir -p dist
-          # 1. Package macOS ZIP
+          # Package macOS ZIP
           zip -r -q dist/Aegis-Defender-Pro-macOS.zip "Aegis Defender Pro.app" run.sh README.md assets
 
-          # 2. Package macOS DMG
+          # Package macOS DMG
           mkdir -p /tmp/dmg_stage
           cp -R "Aegis Defender Pro.app" /tmp/dmg_stage/
           ln -s /Applications /tmp/dmg_stage/Applications
           hdiutil create -volname "Aegis Defender Pro" -srcfolder /tmp/dmg_stage -ov -format UDZO dist/Aegis-Defender-Pro-macOS.dmg
           rm -rf /tmp/dmg_stage
 
-          # 3. Package Windows ZIP
-          mkdir -p /tmp/win_stage
-          cp -R server.py "Aegis Defender Pro.vbs" run.bat Create_Windows_Shortcut.ps1 build_windows_exe.py README.md ARCHITECTURE.md engine static data assets /tmp/win_stage/
-          cd /tmp/win_stage && zip -r -q $GITHUB_WORKSPACE/dist/Aegis-Defender-Pro-Windows.zip .
-          cd $GITHUB_WORKSPACE && rm -rf /tmp/win_stage
+      - name: Upload macOS Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-artifacts
+          path: |
+            dist/Aegis-Defender-Pro-macOS.dmg
+            dist/Aegis-Defender-Pro-macOS.zip
 
-      - name: Create GitHub Release
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Build Tools & PyInstaller
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+
+      - name: Compile Standalone Windows Executable (.exe)
+        shell: pwsh
+        run: |
+          pyinstaller --name="Aegis Defender Pro" --onefile --windowed --icon=assets/app_icon.ico --add-data "static;static" --add-data "engine;engine" --add-data "data;data" --add-data "assets;assets" server.py
+
+      - name: Ensure Dist Directory
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "dist")) { mkdir dist }
+          Copy-Item "dist/Aegis Defender Pro.exe" "dist/Aegis-Defender-Setup.exe"
+
+      - name: Build Inno Setup Installer (.exe)
+        uses: Minisug/inno-setup-action@v1
+        with:
+          path: installer.iss
+        continue-on-error: true
+
+      - name: Package Windows Portable Bundle (.zip)
+        shell: pwsh
+        run: |
+          mkdir win_stage
+          Copy-Item server.py, "Aegis Defender Pro.vbs", run.bat, Create_Windows_Shortcut.ps1, build_windows_exe.py, README.md, ARCHITECTURE.md win_stage/
+          Copy-Item engine, static, data, assets -Recurse win_stage/
+          Compress-Archive -Path win_stage/* -DestinationPath dist/Aegis-Defender-Pro-Windows.zip -Force
+
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifacts
+          path: |
+            dist/Aegis-Defender-Setup.exe
+            dist/Aegis Defender Pro.exe
+            dist/Aegis-Defender-Pro-Windows.zip
+
+  publish-release:
+    needs: [build-macos, build-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release_files
+          merge-multiple: true
+
+      - name: Publish to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "Aegis Defender Pro ${{ github.ref_name }}"
-          tag_name: ${{ github.ref_name || 'v4.0.0' }}
+          name: "Aegis Defender Pro ${{ github.ref_name || 'v4.1.0' }}"
+          tag_name: ${{ github.ref_name || 'v4.1.0' }}
           draft: false
           prerelease: false
           body: |
@@ -53,9 +116,11 @@ jobs:
             Military-grade cross-platform antivirus for macOS and Windows.
 
             ### 📦 Download Links
-            - 🍏 **macOS Installer:** `Aegis-Defender-Pro-macOS.dmg` (Apple Silicon & Intel)
-            - 🍏 **macOS Portable:** `Aegis-Defender-Pro-macOS.zip`
-            - 🪟 **Windows Bundle:** `Aegis-Defender-Pro-Windows.zip` (Windows 10 / 11)
+            - 🪟 **Windows Installer (.EXE):** [`Aegis-Defender-Setup.exe`](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Setup.exe) (Windows 10 / 11)
+            - 🪟 **Windows Standalone (.EXE):** [`Aegis Defender Pro.exe`](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis%20Defender%20Pro.exe)
+            - 🪟 **Windows Portable Bundle (.ZIP):** [`Aegis-Defender-Pro-Windows.zip`](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-Windows.zip)
+            - 🍏 **macOS Installer (.DMG):** [`Aegis-Defender-Pro-macOS.dmg`](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-macOS.dmg) (Apple Silicon & Intel)
+            - 🍏 **macOS Portable (.ZIP):** [`Aegis-Defender-Pro-macOS.zip`](https://github.com/swaroop22/aegis-antivirus/releases/latest/download/Aegis-Defender-Pro-macOS.zip)
 
             ### 🚀 Highlights
             - **Ransomware Canary Traps:** Decoy honeypots halt unauthorized encryption in < 5ms
@@ -64,6 +129,4 @@ jobs:
             - **Zero-Trust Socket Guard:** Live TCP/UDP socket auditor intercepts reverse shells
             - **HMAC Cryptographic Vault:** Sealed isolation with 3-pass DoD 5220.22-M shredding
           files: |
-            dist/Aegis-Defender-Pro-macOS.dmg
-            dist/Aegis-Defender-Pro-macOS.zip
-            dist/Aegis-Defender-Pro-Windows.zip
+            release_files/*
