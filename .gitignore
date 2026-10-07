@@ -1,0 +1,26 @@
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment & IDE
+.env
+.venv/
+env/
+venv/
+.idea/
+.vscode/
+.DS_Store
+
+# Quarantine Vault isolated payloads (never commit quarantined malware samples)
+quarantine_vault/*.aegis_*
+quarantine_vault/*.aegis_sealed
+quarantine_vault/*.aegis_quarantined
+
+# Canary test decoys
+.aegis_canary*
+.aegis_decoy*
+.aegis_honeypot*
+test_samples/*.com
+test_samples/*.sh

@@ -1,0 +1,46 @@
+{
+  "64b4f52f": {
+    "id": "64b4f52f",
+    "file_name": "eicar_test_sample.com",
+    "original_path": "/Users/krishnajyothiswarooppothamsetti/.gemini/antigravity-ide/scratch/aegis-antivirus/test_samples/eicar_test_sample.com",
+    "vault_path": "/Users/krishnajyothiswarooppothamsetti/.gemini/antigravity-ide/scratch/aegis-antivirus/quarantine_vault/64b4f52f.aegis_quarantined",
+    "threat_name": "EICAR-Test-Signature.Standard",
+    "threat_type": "Test File",
+    "severity": "Low",
+    "sha256": "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f",
+    "file_size": 68,
+    "detection_method": "Exact Hash Signature",
+    "timestamp": "2026-10-06 22:16:21",
+    "status": "Quarantined"
+  },
+  "aacf46f3": {
+    "id": "aacf46f3",
+    "file_name": "server.py",
+    "original_path": "/Users/krishnajyothiswarooppothamsetti/Desktop/Gemini Projects/aegis-antivirus/server.py",
+    "vault_path": "/Users/krishnajyothiswarooppothamsetti/Desktop/Gemini Projects/aegis-antivirus/quarantine_vault/aacf46f3.aegis_sealed",
+    "threat_name": "Heuristic.Unix.BashReverseShell",
+    "threat_type": "Reverse Shell",
+    "severity": "Critical",
+    "sha256": "4e4c384171d554542ab38983a3de6734cf6b21bef4d7143af2b681a5e52bf1bf",
+    "file_size": 13294,
+    "detection_method": "Heuristic Rule Match",
+    "integrity_tag": "6c571c74823f6d7326c54951c515e25b47690684287b5c63de1717635503f4b1",
+    "timestamp": "2026-10-06 22:38:39",
+    "status": "Cryptographically Sealed"
+  },
+  "b18adff1": {
+    "id": "b18adff1",
+    "file_name": "test_detection.py",
+    "original_path": "/Users/krishnajyothiswarooppothamsetti/Desktop/Gemini Projects/aegis-antivirus/test_detection.py",
+    "vault_path": "/Users/krishnajyothiswarooppothamsetti/Desktop/Gemini Projects/aegis-antivirus/quarantine_vault/b18adff1.aegis_sealed",
+    "threat_name": "Heuristic.Unix.BashReverseShell",
+    "threat_type": "Reverse Shell",
+    "severity": "Critical",
+    "sha256": "d8594df082032ccb19bb7780dd10a2ebc8f6e77a3e89efda9339eff8679690fa",
+    "file_size": 5132,
+    "detection_method": "Heuristic Rule Match",
+    "integrity_tag": "5c99c5ed95ae86ee53c3d9c35d22153bd4209174e195cea10983782959085b79",
+    "timestamp": "2026-10-06 22:38:39",
+    "status": "Cryptographically Sealed"
+  }
+}

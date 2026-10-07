@@ -1,0 +1,65 @@
+[
+  {
+    "timestamp": "2026-10-06 22:38:39",
+    "type": "quick",
+    "scanned_files": 154,
+    "threats_found": 2,
+    "duration_sec": 36.1,
+    "threats": [
+      {
+        "is_threat": true,
+        "threat_name": "Heuristic.Unix.BashReverseShell",
+        "threat_type": "Reverse Shell",
+        "severity": "Critical",
+        "category": "Reverse Shell",
+        "file_path": "/Users/krishnajyothiswarooppothamsetti/Desktop/Gemini Projects/aegis-antivirus/server.py",
+        "file_name": "server.py",
+        "file_size": 13294,
+        "sha256": "4e4c384171d554542ab38983a3de6734cf6b21bef4d7143af2b681a5e52bf1bf",
+        "md5": "3396512095a357b390d519ecb816fcd5",
+        "entropy": 4.582,
+        "detection_method": "Heuristic Rule Match",
+        "rule_id": "RULE-REVERSE-SHELL-BASH",
+        "details": "Interactive bash/sh reverse shell connecting back over TCP socket.",
+        "remediation": "Isolate in quarantine and examine origin.",
+        "quarantine_id": "aacf46f3",
+        "quarantined": true
+      },
+      {
+        "is_threat": true,
+        "threat_name": "Heuristic.Unix.BashReverseShell",
+        "threat_type": "Reverse Shell",
+        "severity": "Critical",
+        "category": "Reverse Shell",
+        "file_path": "/Users/krishnajyothiswarooppothamsetti/Desktop/Gemini Projects/aegis-antivirus/test_detection.py",
+        "file_name": "test_detection.py",
+        "file_size": 5132,
+        "sha256": "d8594df082032ccb19bb7780dd10a2ebc8f6e77a3e89efda9339eff8679690fa",
+        "md5": "f1ee938927b7973f786674751a87dab8",
+        "entropy": 5.047,
+        "detection_method": "Heuristic Rule Match",
+        "rule_id": "RULE-REVERSE-SHELL-BASH",
+        "details": "Interactive bash/sh reverse shell connecting back over TCP socket.",
+        "remediation": "Isolate in quarantine and examine origin.",
+        "quarantine_id": "b18adff1",
+        "quarantined": true
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-10-06 22:24:49",
+    "type": "quick",
+    "scanned_files": 141,
+    "threats_found": 0,
+    "duration_sec": 23.9,
+    "threats": []
+  },
+  {
+    "timestamp": "2026-10-06 22:24:06",
+    "type": "quick",
+    "scanned_files": 141,
+    "threats_found": 0,
+    "duration_sec": 25.6,
+    "threats": []
+  }
+]

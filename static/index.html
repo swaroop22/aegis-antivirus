@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aegis Defender Pro | Next-Gen Antivirus & Endpoint Shield</title>
+  <meta name="description" content="Enterprise-grade cross-platform real-time antivirus, heuristic malware engine, and threat quarantine system for macOS and Windows.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="cyber-theme">
+  <!-- Audio Alert Synthesizer container -->
+  <div id="audio-synthesizer" aria-hidden="true" style="display: none;"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon-wrapper">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="M9 12l2 2 4-4" />
+          </svg>
+          <div class="pulse-ring"></div>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">AEGIS DEFENDER</span>
+          <span class="brand-edition">PRO ENTERPRISE</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button id="nav-btn-dashboard" class="nav-item active" onclick="switchTab('dashboard')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="9" rx="1" />
+            <rect x="14" y="3" width="7" height="5" rx="1" />
+            <rect x="14" y="12" width="7" height="9" rx="1" />
+            <rect x="3" y="16" width="7" height="5" rx="1" />
+          </svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button id="nav-btn-scanner" class="nav-item" onclick="switchTab('scanner')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            <circle cx="11" cy="11" r="3" />
+          </svg>
+          <span>Threat Scanner</span>
+        </button>
+
+        <button id="nav-btn-shield" class="nav-item" onclick="switchTab('shield')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+          <span>Real-Time Shield</span>
+          <span id="shield-badge-indicator" class="nav-badge live">LIVE</span>
+        </button>
+
+        <button id="nav-btn-quarantine" class="nav-item" onclick="switchTab('quarantine')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <span>Quarantine Vault</span>
+          <span id="nav-quarantine-count" class="nav-badge count">0</span>
+        </button>
+
+        <button id="nav-btn-processes" class="nav-item" onclick="switchTab('processes')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          </svg>
+          <span>Process Guard</span>
+        </button>
+
+        
+        <button id="nav-btn-persistence" class="nav-item" onclick="switchTab('persistence')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+          <span>MITRE ATT&CK</span>
+          <span class="nav-badge live" style="background:rgba(0,242,254,0.15);color:var(--cyan-primary);border-color:var(--cyan-primary);">EDR</span>
+        </button>
+
+        <button id="nav-btn-network" class="nav-item" onclick="switchTab('network')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
+          <span>Network Guard</span>
+        </button>
+        <button id="nav-btn-intel" class="nav-item" onclick="switchTab('intel')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+          <span>Threat Intelligence</span>
+        </button>
+
+        <button id="nav-btn-lab" class="nav-item" onclick="switchTab('lab')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 2v7.31L4.69 18.5a2 2 0 0 0 1.62 3.1h15.38a2 2 0 0 0 1.62-3.1L18 9.31V2" />
+            <line x1="8" y1="2" x2="16" y2="2" />
+            <line x1="9" y1="12" x2="15" y2="12" />
+          </svg>
+          <span>EICAR Test Lab</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="system-status-chip">
+          <span class="status-dot pulsing"></span>
+          <span id="sidebar-os-info">macOS Secure Engine</span>
+        </div>
+        <div class="version-label">v2.4.0-Enterprise • Active</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-viewport">
+      <!-- Top Header Bar -->
+      <header class="topbar">
+        <div class="header-left">
+          <h1 id="page-heading">Cyber Defense Dashboard</h1>
+          <p class="page-subtitle">Real-Time Endpoint Protection & Threat Interceptor</p>
+        </div>
+
+        <div class="header-right">
+          <div class="telemetry-pill">
+            <span class="telemetry-label">STATUS</span>
+            <span id="global-status-pill" class="telemetry-value active">SHIELD ARMED</span>
+          </div>
+
+          <div class="telemetry-pill">
+            <span class="telemetry-label">SIGNATURES</span>
+            <span id="global-sig-count" class="telemetry-value">Loading...</span>
+          </div>
+
+          <button id="btn-quick-scan-top" class="btn-primary" onclick="launchQuickScan()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <span>Scan System</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD -->
+      <section id="tab-dashboard" class="tab-pane active">
+        <!-- Hero Protection Banner -->
+        <div class="hero-shield-card">
+          <div class="shield-radar-container">
+            <div class="radar-sweep"></div>
+            <div class="shield-core">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M9 12l2 2 4-4" />
+              </svg>
+            </div>
+          </div>
+          <div class="hero-shield-text">
+            <div class="security-score-badge">
+              <span class="score-number">100%</span>
+              <span class="score-text">System Protected</span>
+            </div>
+            <h2 class="hero-title">Your Computer is Actively Guarded</h2>
+            <p class="hero-desc">Real-Time File Interceptor, Memory Behavior Guard, and Ransomware Heuristics are actively monitoring filesystem activity and blocking known zero-day vectors.</p>
+            <div class="hero-actions">
+              <button id="btn-hero-quick-scan" class="btn-primary pulse" onclick="launchQuickScan()">
+                Quick Scan Downloads & Desktop
+              </button>
+              <button id="btn-hero-test-lab" class="btn-secondary" onclick="switchTab('lab')">
+                Run Harmless EICAR Test
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Stat Cards -->
+        
+        <!-- Next-Gen Ransomware Canary Honeypot Banner -->
+        <div class="canary-honeypot-banner">
+          <div class="canary-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+          </div>
+          <div class="canary-info">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="canary-title">Sentinel Ransomware Canary Decoys</span>
+              <span class="badge-threat clean" id="canary-status-pill">ARMED & MONITORING</span>
+            </div>
+            <p class="canary-desc">Active honeypot decoy files are deployed across monitored directories. If unauthorized ransomware touches a canary, execution is frozen in under 5ms.</p>
+          </div>
+          <button class="btn-secondary" style="padding:6px 14px;font-size:12px;" onclick="triggerCanaryTest()">Simulate Canary Trip</button>
+        </div>
+        <div class="metrics-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Real-Time Shield</span>
+              <div class="toggle-switch">
+                <input type="checkbox" id="toggle-shield-switch" checked onchange="toggleRealtimeShield()">
+                <label for="toggle-shield-switch"></label>
+              </div>
+            </div>
+            <div class="stat-value" id="stat-shield-status">Active</div>
+            <div class="stat-sub">Intercepting new files automatically</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Quarantined Threats</span>
+              <span class="stat-badge warning" id="stat-quarantine-badge">Isolated</span>
+            </div>
+            <div class="stat-value" id="stat-quarantine-count">0</div>
+            <div class="stat-sub">Safely scrambled in encrypted vault</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Files Scanned</span>
+              <span class="stat-badge info">Session</span>
+            </div>
+            <div class="stat-value" id="stat-files-scanned">0</div>
+            <div class="stat-sub">Static, Hash & Heuristic checked</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">Detection Database</span>
+              <span class="stat-badge success">Up to Date</span>
+            </div>
+            <div class="stat-value" id="stat-signatures-count">0</div>
+            <div class="stat-sub">Ransomware, Trojans & YARA rules</div>
+          </div>
+        </div>
+
+        <!-- 4 Core Defense Layers Status Grid -->
+        <div class="defense-layers-section">
+          <h3 class="section-title">Active Security Layers</h3>
+          <div class="layers-grid">
+            <div class="layer-card active">
+              <div class="layer-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+              </div>
+              <div class="layer-info">
+                <h4>Real-Time File Interceptor</h4>
+                <p>Monitors Downloads, Desktop, and Temp folders for payload dropped.</p>
+              </div>
+              <span class="layer-pill on">ON</span>
+            </div>
+
+            <div class="layer-card active">
+              <div class="layer-icon cyan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+              </div>
+              <div class="layer-info">
+                <h4>Ransomware Heuristics & Entropy</h4>
+                <p>Detects high-entropy encryption payloads and ransom extortion notes.</p>
+              </div>
+              <span class="layer-pill on">ON</span>
+            </div>
+
+            <div class="layer-card active">
+              <div class="layer-icon purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
+              </div>
+              <div class="layer-info">
+                <h4>Process & Memory Guard</h4>
+                <p>Audits commandline injection, reverse shells, and unauthorized privilege escalation.</p>
+              </div>
+              <span class="layer-pill on">ON</span>
+            </div>
+
+            <div class="layer-card active">
+              <div class="layer-icon amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+              </div>
+              <div class="layer-info">
+                <h4>Zero-Execute Quarantine Vault</h4>
+                <p>XOR-masks detected binaries to immediately neutralize execution.</p>
+              </div>
+              <span class="layer-pill on">ON</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Interception Feed -->
+        <div class="recent-events-card">
+          <div class="card-header">
+            <h3>Recent Security Telemetry</h3>
+            <button class="btn-text" onclick="refreshDashboard()">Refresh</button>
+          </div>
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Event Target</th>
+                  <th>Detection Details</th>
+                  <th>Severity</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="dashboard-recent-events-tbody">
+                <tr>
+                  <td colspan="5" class="table-empty">Awaiting filesystem activity...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: THREAT SCANNER -->
+      <section id="tab-scanner" class="tab-pane">
+        <!-- Scan Profiles Selector -->
+        <div class="scanner-profiles-grid">
+          <div class="profile-card" onclick="startScan('quick')">
+            <div class="profile-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+            </div>
+            <h4>Quick Scan</h4>
+            <p>Rapidly checks Downloads, Desktop, and Startup drop directories.</p>
+            <button id="btn-start-quick-scan" class="btn-outline">Run Quick Scan</button>
+          </div>
+
+          <div class="profile-card" onclick="startScan('deep')">
+            <div class="profile-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h4>Deep Full Scan</h4>
+            <p>Comprehensive scan across user workspace, documents, and downloads.</p>
+            <button id="btn-start-deep-scan" class="btn-outline">Run Deep Scan</button>
+          </div>
+
+          <div class="profile-card custom-scan-card">
+            <div class="profile-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h4>Custom Directory Scan</h4>
+            <p>Enter any folder path on your MacBook or Windows machine.</p>
+            <div class="custom-input-group">
+              <input type="text" id="custom-scan-path" placeholder="/Users/... or C:\..." />
+              <button id="btn-start-custom-scan" class="btn-outline" onclick="startCustomScan(event)">Scan Path</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Scan Execution Panel -->
+        <div id="live-scan-panel" class="scan-execution-card" style="display: none;">
+          <div class="scan-exec-header">
+            <div>
+              <span class="scan-badge" id="scan-exec-type">QUICK SCAN</span>
+              <h3 id="scan-exec-status">Scanning Files...</h3>
+            </div>
+            <button id="btn-cancel-scan" class="btn-danger" onclick="cancelScan()">Cancel Scan</button>
+          </div>
+
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar-track">
+              <div id="scan-progress-bar" class="progress-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div class="progress-stats">
+              <span id="scan-progress-percentage">0%</span>
+              <span id="scan-progress-counts">0 files inspected • 0 threats</span>
+            </div>
+          </div>
+
+          <div class="current-file-box">
+            <span class="label">CURRENT FILE:</span>
+            <span id="scan-current-filepath" class="path">Analyzing filesystem...</span>
+          </div>
+        </div>
+
+        <!-- Drag & Drop Instant Analysis Sandbox -->
+        <div class="drag-drop-section">
+          <h3>Instant File Inspection Sandbox</h3>
+          <p class="section-desc">Drop any suspicious executable, script, or document here to inspect its SHA-256 hash, Shannon Entropy, and heuristic patterns in milliseconds.</p>
+
+          <div id="drop-zone" class="drop-zone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="48" height="48">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <h4>Drag & Drop File to Inspect</h4>
+            <p>Or click to select a local file</p>
+            <input type="file" id="file-picker-input" style="display: none;" onchange="handleFilePicked(event)">
+            <button class="btn-secondary" onclick="document.getElementById('file-picker-input').click()">Browse File</button>
+          </div>
+
+          <!-- Instant Inspection Result Card -->
+          <div id="inspection-result-card" class="inspection-result-card" style="display: none;">
+            <div class="inspection-header">
+              <div id="inspection-verdict-badge" class="verdict-badge clean">CLEAN</div>
+              <h4 id="inspection-file-name">filename.ext</h4>
+            </div>
+
+            <div class="inspection-grid">
+              <div class="inspect-field">
+                <span class="lbl">SHA-256 Hash</span>
+                <span id="inspect-sha256" class="val code">--</span>
+              </div>
+              <div class="inspect-field">
+                <span class="lbl">Shannon Entropy</span>
+                <span id="inspect-entropy" class="val">--</span>
+              </div>
+              <div class="inspect-field">
+                <span class="lbl">Detection Method</span>
+                <span id="inspect-method" class="val">--</span>
+              </div>
+              <div class="inspect-field">
+                <span class="lbl">File Size</span>
+                <span id="inspect-size" class="val">--</span>
+              </div>
+            </div>
+
+            <div class="inspect-details-box">
+              <span class="lbl">Analysis Output:</span>
+              <p id="inspect-details">--</p>
+            </div>
+
+            <div class="inspect-actions">
+              <button id="btn-quarantine-inspected" class="btn-danger" style="display: none;" onclick="quarantineCurrentInspected()">
+                Isolate & Quarantine Immediately
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scan History Table -->
+        <div class="scan-history-card">
+          <h3>Scan History</h3>
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Profile</th>
+                  <th>Files Scanned</th>
+                  <th>Threats Intercepted</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody id="scan-history-tbody">
+                <tr><td colspan="5" class="table-empty">No scan runs recorded yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: REAL-TIME SHIELD -->
+      <section id="tab-shield" class="tab-pane">
+        <div class="shield-settings-card">
+          <div class="shield-header-row">
+            <div>
+              <h3>Continuous Filesystem Shield</h3>
+              <p class="section-desc">Intercepts every file write event across monitored directories and runs real-time static/entropy analysis.</p>
+            </div>
+            <div class="shield-toggle-large">
+              <button id="btn-toggle-shield-main" class="btn-primary" onclick="toggleRealtimeShield()">
+                Shield: Active
+              </button>
+            </div>
+          </div>
+
+          <div class="shield-options-grid">
+            <div class="shield-opt">
+              <div class="opt-label">Auto-Quarantine on Interception</div>
+              <div class="opt-desc">Instantly move and scramble detected malware before the OS or user can execute it.</div>
+              <span class="badge-active">Enabled (Recommended)</span>
+            </div>
+            <div class="shield-opt">
+              <div class="opt-label">Inspection Engine</div>
+              <div class="opt-desc">Hash Signatures + Shannon Entropy Analysis + Heuristic YARA Pattern Matching.</div>
+              <span class="badge-active">Multi-Layer Active</span>
+            </div>
+          </div>
+
+          <!-- Watched Folders Management -->
+          <div class="watched-dirs-section">
+            <h4>Monitored Directories</h4>
+            <div class="add-dir-row">
+              <input type="text" id="input-new-dir" placeholder="Enter absolute folder path (e.g. /Users/you/Downloads or C:\Users\you\Desktop)" />
+              <button class="btn-secondary" onclick="addWatchedDirectory()">Add Folder</button>
+            </div>
+
+            <div id="watched-dirs-list" class="watched-dirs-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Event Stream Log -->
+        <div class="recent-events-card">
+          <div class="card-header">
+            <h3>Live Filesystem Interception Log</h3>
+            <span class="live-pulse-badge"><span class="dot"></span> Monitoring</span>
+          </div>
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>File Name & Path</th>
+                  <th>Threat Identification</th>
+                  <th>Severity</th>
+                  <th>Action Taken</th>
+                </tr>
+              </thead>
+              <tbody id="shield-events-tbody">
+                <tr><td colspan="5" class="table-empty">No filesystem interceptions yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: QUARANTINE VAULT -->
+      <section id="tab-quarantine" class="tab-pane">
+        <div class="quarantine-hero">
+          <div class="hero-left">
+            <h3>Encrypted Quarantine Vault</h3>
+            <p class="section-desc">Threats quarantined here are scrambled using XOR byte masking and stripped of all executable permissions (`chmod 000`) so they cannot execute.</p>
+          </div>
+          <div class="hero-right">
+            <div class="vault-count-badge">
+              <span id="vault-total-count" class="num">0</span>
+              <span class="lbl">Items in Vault</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vault-items-card">
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Quarantined At</th>
+                  <th>Original File Path</th>
+                  <th>Threat Name</th>
+                  <th>Severity</th>
+                  <th>SHA-256 Hash</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="quarantine-tbody">
+                <tr><td colspan="6" class="table-empty">Quarantine vault is empty. No active threats isolated.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: PROCESS GUARD -->
+      <section id="tab-processes" class="tab-pane">
+        <div class="process-guard-hero">
+          <div>
+            <h3>Active Process & Memory Inspector</h3>
+            <p class="section-desc">Audits running OS processes, command lines, memory buffers, and flags suspicious reverse shells, miners, or privilege elevation commands.</p>
+          </div>
+          <button class="btn-secondary" onclick="loadProcesses()">Refresh Processes</button>
+        </div>
+
+        <div class="process-table-card">
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>PID</th>
+                  <th>Process Name</th>
+                  <th>Risk Score</th>
+                  <th>CPU %</th>
+                  <th>Commandline & Arguments</th>
+                  <th>Security Action</th>
+                </tr>
+              </thead>
+              <tbody id="processes-tbody">
+                <tr><td colspan="6" class="table-empty">Loading active processes...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- TAB: MITRE ATT&CK & PERSISTENCE HUNTER -->
+      <section id="tab-persistence" class="tab-pane">
+        <div class="process-guard-hero">
+          <div>
+            <h3>MITRE ATT&CK Persistence & Autostart Hunter</h3>
+            <p class="section-desc">Audits system LaunchDaemons, LaunchAgents, and Registry Run keys to uncover stealthy persistence implants (MITRE T1543 / T1547).</p>
+          </div>
+          <button class="btn-secondary" onclick="loadPersistenceAudit()">Run Deep Audit</button>
+        </div>
+
+        <div class="mitre-matrix-overview">
+          <div class="mitre-tactic-pill active"><span>T1543</span> System Services</div>
+          <div class="mitre-tactic-pill active"><span>T1053</span> Scheduled Tasks</div>
+          <div class="mitre-tactic-pill active"><span>T1547</span> Boot/Logon Autostart</div>
+          <div class="mitre-tactic-pill active"><span>T1059</span> Command & Scripting</div>
+          <div class="mitre-tactic-pill active"><span>T1055</span> Process Injection</div>
+        </div>
+
+        <div class="process-table-card">
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Label / Service</th>
+                  <th>Category</th>
+                  <th>MITRE ATT&CK Technique</th>
+                  <th>Target Executable / Script</th>
+                  <th>Risk Assessment</th>
+                </tr>
+              </thead>
+              <tbody id="persistence-tbody">
+                <tr><td colspan="5" class="table-empty">Loading persistence vectors...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB: NETWORK EXFILTRATION & SOCKET GUARD -->
+      <section id="tab-network" class="tab-pane">
+        <div class="process-guard-hero">
+          <div>
+            <h3>Zero-Trust Network & C2 Socket Auditor</h3>
+            <p class="section-desc">Monitors active outbound sockets and listening ports to detect data exfiltration, reverse shells, and malicious C2 beaconing in real time.</p>
+          </div>
+          <button class="btn-secondary" onclick="loadNetworkConnections()">Refresh Sockets</button>
+        </div>
+
+        <div class="process-table-card">
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Process Name</th>
+                  <th>PID</th>
+                  <th>Protocol</th>
+                  <th>Socket Endpoint (Local -> Remote)</th>
+                  <th>State</th>
+                  <th>Risk Score</th>
+                </tr>
+              </thead>
+              <tbody id="network-tbody">
+                <tr><td colspan="6" class="table-empty">Inspecting network sockets...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: THREAT INTELLIGENCE -->
+      <section id="tab-intel" class="tab-pane">
+        <div class="intel-header-row">
+          <div>
+            <h3>Threat Intelligence & YARA Signatures</h3>
+            <p class="section-desc">Inspect loaded malware definitions, ransomware signatures, and add custom hash or regex indicators.</p>
+          </div>
+          <button class="btn-primary" onclick="openAddRuleModal()">+ Add Custom Signature</button>
+        </div>
+
+        <!-- Custom Rule Modal -->
+        <div id="add-rule-modal" class="modal-overlay" style="display: none;">
+          <div class="modal-card">
+            <div class="modal-header">
+              <h4>Add Custom Threat Signature</h4>
+              <button class="modal-close" onclick="closeAddRuleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group">
+                <label>Signature Type</label>
+                <select id="modal-rule-type" onchange="toggleRuleInputs()">
+                  <option value="hash">Exact SHA-256 / MD5 Hash</option>
+                  <option value="regex">YARA-Style Regex Pattern</option>
+                </select>
+              </div>
+
+              <div class="input-group" id="group-hash-input">
+                <label>File Hash (SHA-256 or MD5)</label>
+                <input type="text" id="modal-hash-value" placeholder="e.g. 275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f">
+              </div>
+
+              <div class="input-group" id="group-regex-input" style="display: none;">
+                <label>Regex Pattern</label>
+                <input type="text" id="modal-regex-pattern" placeholder="e.g. (?i)(powershell\s+-enc|malicious_func\(\))">
+              </div>
+
+              <div class="input-group">
+                <label>Threat Name</label>
+                <input type="text" id="modal-rule-name" placeholder="e.g. Trojan.Custom.Payload">
+              </div>
+
+              <div class="input-group">
+                <label>Severity</label>
+                <select id="modal-rule-severity">
+                  <option value="Critical">Critical</option>
+                  <option value="High" selected>High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn-secondary" onclick="closeAddRuleModal()">Cancel</button>
+              <button class="btn-primary" onclick="submitCustomRule()">Register Signature</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="intel-tables-grid">
+          <div class="intel-card">
+            <h4>Known Hash Signatures Database</h4>
+            <div class="events-table-wrapper" style="max-height: 400px; overflow-y: auto;">
+              <table class="cyber-table">
+                <thead>
+                  <tr>
+                    <th>Threat Name</th>
+                    <th>Category</th>
+                    <th>Severity</th>
+                    <th>Hash</th>
+                  </tr>
+                </thead>
+                <tbody id="intel-hashes-tbody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="intel-card">
+            <h4>Heuristic YARA Detection Rules</h4>
+            <div class="events-table-wrapper" style="max-height: 400px; overflow-y: auto;">
+              <table class="cyber-table">
+                <thead>
+                  <tr>
+                    <th>Rule Identifier</th>
+                    <th>Target Behavior</th>
+                    <th>Severity</th>
+                  </tr>
+                </thead>
+                <tbody id="intel-rules-tbody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: EICAR TEST LAB -->
+      <section id="tab-lab" class="tab-pane">
+        <div class="test-lab-hero">
+          <h3>Antivirus Verification & EICAR Test Lab</h3>
+          <p class="section-desc">Verify that Aegis Defender Pro is actively intercepting and neutralizing threats without putting your machine at risk. EICAR is the global cybersecurity standard string designed specifically to safely validate antivirus detection engines.</p>
+        </div>
+
+        <div class="lab-cards-grid">
+          <div class="lab-card">
+            <div class="lab-badge">TEST 1</div>
+            <h4>EICAR Standard Test Signature</h4>
+            <p>Generates a 68-byte harmless test string in the <code>test_samples</code> folder. Aegis's Real-Time Shield will intercept it in under 1 second and isolate it into the Quarantine Vault.</p>
+            <button id="btn-run-eicar-test" class="btn-primary" onclick="generateEicarTest()">
+              Drop EICAR Test File
+            </button>
+          </div>
+
+          <div class="lab-card">
+            <div class="lab-badge">TEST 2</div>
+            <h4>Heuristic Reverse Shell Pattern</h4>
+            <p>Generates a harmless mock script containing an interactive socket pipe syntax. Validates that Aegis's YARA heuristic regex engine recognizes attack patterns and blocks them.</p>
+            <button id="btn-run-heuristic-test" class="btn-secondary" onclick="generateHeuristicTest()">
+              Drop Mock Heuristic Script
+            </button>
+          </div>
+        </div>
+
+        <div class="lab-status-card">
+          <h4>Live Detection Verification Feed</h4>
+          <p class="section-desc">Clicking either button above should immediately trigger a toast alert, log an interception event below, and quarantine the file.</p>
+          <div class="events-table-wrapper">
+            <table class="cyber-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Test File</th>
+                  <th>Detection</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody id="lab-test-results-tbody">
+                <tr><td colspan="4" class="table-empty">Ready. Click a test button above to verify detection.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
