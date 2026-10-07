@@ -1,9 +1,3 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/docs/index.html" },
-    { "source": "/landing.css", "destination": "/docs/landing.css" },
-    { "source": "/logo.png", "destination": "/docs/logo.png" },
-    { "source": "/(.*)", "destination": "/docs/$1" }
-  ]
+  "cleanUrls": true
 }
