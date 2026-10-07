@@ -155,8 +155,11 @@
 
       <!-- TAB 1: DASHBOARD -->
       <section id="tab-dashboard" class="tab-pane active">
-        <!-- Hero Protection Banner -->
-        <div class="hero-shield-card">
+        <!-- Cockpit Top Grid: Hero Shield + Canaries + 4 Metrics -->
+        <div class="dashboard-top-row">
+          <div class="dashboard-hero-col">
+            <!-- Hero Protection Banner -->
+            <div class="hero-shield-card">
           <div class="shield-radar-container">
             <div class="radar-sweep"></div>
             <div class="shield-core">
@@ -199,8 +202,11 @@
             <p class="canary-desc">Active honeypot decoy files are deployed across monitored directories. If unauthorized ransomware touches a canary, execution is frozen in under 5ms.</p>
           </div>
           <button class="btn-secondary" style="padding:6px 14px;font-size:12px;" onclick="triggerCanaryTest()">Simulate Canary Trip</button>
+          </div>
         </div>
-        <div class="metrics-grid">
+
+        <div class="dashboard-metrics-col">
+          <div class="metrics-grid">
           <div class="stat-card">
             <div class="stat-header">
               <span class="stat-title">Real-Time Shield</span>
@@ -240,6 +246,8 @@
             <div class="stat-sub">Ransomware, Trojans & YARA rules</div>
           </div>
         </div>
+      </div>
+    </div>
 
         <!-- 4 Core Defense Layers Status Grid -->
         <div class="defense-layers-section">
